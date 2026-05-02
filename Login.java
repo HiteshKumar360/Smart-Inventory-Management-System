@@ -28,6 +28,10 @@ public class Login extends JFrame implements ActionListener {
     // ──────────────────────────────────────────────────────────────────
 
     Login() {
+        try {
+            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+        } catch (Exception ignored) {}
+
         setTitle("Smart Inventory System");
         setSize(480, 600);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
