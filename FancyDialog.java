@@ -24,12 +24,20 @@ public class FancyDialog extends JDialog {
     // ── Factory Methods ────────────────────────────────────────────────
 
     public static void showSuccess(JFrame parent, String message) {
+        try {
+            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+        } catch (Exception ignored) {}
+        
         new FancyDialog(parent, "Login Successful", message,
                 "You're now signed in to Smart Inventory.",
                 SUCCESS_COL, "✔").setVisible(true);
     }
 
     public static void showError(JFrame parent, String message) {
+        try {
+            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+        } catch (Exception ignored) {}
+        
         new FancyDialog(parent, "Authentication Failed", message,
                 "Please check your credentials and try again.",
                 ERROR_COL, "✕").setVisible(true);
