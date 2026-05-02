@@ -122,7 +122,7 @@ public class Dashboard extends JFrame implements ActionListener {
         sidebar.add(navPanel, BorderLayout.CENTER);
 
         // Sidebar Footer
-        JLabel version = new JLabel("v1.0  ·  © 2025", SwingConstants.CENTER);
+        JLabel version = new JLabel("v1.0  ·  © 2026", SwingConstants.CENTER);
         version.setForeground(new Color(60, 75, 120));
         version.setFont(new Font("Segoe UI", Font.PLAIN, 10));
         version.setBorder(BorderFactory.createEmptyBorder(0, 0, 14, 0));
