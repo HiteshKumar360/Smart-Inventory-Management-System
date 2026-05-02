@@ -129,7 +129,7 @@ public class Login extends JFrame implements ActionListener {
         card.add(b1);
 
         // ── Footer ────────────────────────────────────────────────────
-        JLabel footer = new JLabel("© 2025 Smart Inventory System", SwingConstants.CENTER);
+        JLabel footer = new JLabel("© 2026 Smart Inventory System", SwingConstants.CENTER);
         footer.setForeground(new Color(80, 95, 140));
         footer.setFont(new Font("Segoe UI", Font.PLAIN, 10));
         footer.setBounds(30, 418, 300, 18);
