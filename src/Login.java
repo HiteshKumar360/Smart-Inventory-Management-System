@@ -254,7 +254,6 @@ public class Login extends JFrame implements ActionListener {
         SwingUtilities.invokeLater(Login::new);
     }
 
-    // Inner Classes
     static class BackgroundPanel extends JPanel {
         private final int[][] stars;
         private final Timer timer;
@@ -312,19 +311,19 @@ public class Login extends JFrame implements ActionListener {
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
             int arc = 24;
-            // Shadow
+            
             for (int i = 12; i > 0; i--) {
                 g2.setColor(new Color(0, 0, 0, 8));
                 g2.fillRoundRect(-i, -i/2, getWidth() + i*2, getHeight() + i, arc + i, arc + i);
             }
-            // Card fill
+            
             g2.setColor(CARD_FILL);
             g2.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, arc, arc);
-            // Card border
+            
             g2.setColor(CARD_BORDER);
             g2.setStroke(new BasicStroke(1f));
             g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, arc, arc);
-            // Top highlight
+            
             GradientPaint shine = new GradientPaint(
                     0, 0, new Color(255, 255, 255, 22),
                     0, getHeight() / 3f, new Color(255, 255, 255, 0)
@@ -367,36 +366,36 @@ public class Login extends JFrame implements ActionListener {
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
             int arc = 12;
-            // Outer glow
+            
             if (glowAlpha > 0) {
                 for (int i = 8; i > 0; i--) {
                     g2.setColor(new Color(82, 153, 255, (int)(glowAlpha * 20)));
                     g2.fillRoundRect(-i, -i/2, getWidth() + i*2, getHeight() + i, arc + i*2, arc + i*2);
                 }
             }
-            // Button fill gradient
+            
             Color c1 = blend(new Color(50, 120, 230), new Color(80, 160, 255), glowAlpha);
             Color c2 = blend(new Color(30,  90, 200), new Color(50, 130, 230), glowAlpha);
             GradientPaint gp = new GradientPaint(0, 0, c1, 0, getHeight(), c2);
             g2.setPaint(gp);
             g2.fillRoundRect(0, 0, getWidth(), getHeight(), arc, arc);
-            // Top shine
+            
             g2.setColor(new Color(255, 255, 255, 30));
             g2.fillRoundRect(1, 1, getWidth() - 2, getHeight() / 2 - 2, arc, arc);
-            // Border
+            
             g2.setColor(new Color(120, 180, 255, 120));
             g2.setStroke(new BasicStroke(1f));
             g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, arc, arc);
 
-            // Text
+            
             FontMetrics fm = g2.getFontMetrics(getFont());
             int tx = (getWidth() - fm.stringWidth(getText())) / 2;
             int ty = (getHeight() - fm.getHeight()) / 2 + fm.getAscent();
-            // Shadow
+            
             g2.setColor(new Color(0, 30, 80, 100));
             g2.setFont(getFont());
             g2.drawString(getText(), tx + 1, ty + 1);
-            // Label
+            
             g2.setColor(getForeground());
             g2.drawString(getText(), tx, ty);
         }
