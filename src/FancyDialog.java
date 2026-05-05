@@ -15,7 +15,7 @@ public class FancyDialog extends JDialog {
     static final Color SUCCESS_COL = new Color(90,  200, 140);
     static final Color ERROR_COL   = new Color(255, 100, 100);
 
-    // FACTORY METHODS — Login (default messages)
+    // Login (default messages)
     public static void showSuccess(JFrame parent, String message) {
         showSuccess(parent, message,
                 "Login Successful",
@@ -28,7 +28,7 @@ public class FancyDialog extends JDialog {
                 "Please check your credentials and try again.");
     }
 
-    // Custom heading + subtitle (all other screens)
+    // Subtitle (all other screens)
     public static void showSuccess(JFrame parent, String message,
                                    String heading, String subtitle) {
         applyLookAndFeel();
