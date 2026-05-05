@@ -48,7 +48,7 @@ public class Login extends JFrame implements ActionListener {
         card.setLayout(null);
         card.setOpaque(false);
 
-        // ── Logo
+        // ── Logo ─────────────────────────────────────────────────────
         ImageIcon rawIcon = new ImageIcon("images/logo.png");
         Image scaled = rawIcon.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
         JLabel icon = new JLabel(new ImageIcon(scaled), SwingConstants.CENTER);
