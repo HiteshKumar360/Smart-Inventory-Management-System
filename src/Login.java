@@ -12,7 +12,7 @@ public class Login extends JFrame implements ActionListener {
     JPasswordField t2;
     JButton b1;
 
-    // ── Color Palette ──────────────────────────────────────────────────
+    // Color Palette 
     static final Color BG_TOP        = new Color(10,  12,  20);
     static final Color BG_BTM        = new Color(18,  24,  48);
     static final Color CARD_FILL     = new Color(22,  28,  52, 230);
@@ -25,7 +25,7 @@ public class Login extends JFrame implements ActionListener {
     static final Color FIELD_FOCUS   = new Color(82, 153, 255, 140);
     static final Color TEXT_PRIMARY  = new Color(230, 235, 255);
     static final Color TEXT_MUTED    = new Color(130, 145, 185);
-    // ──────────────────────────────────────────────────────────────────
+    
 
     Login() {
         try {
@@ -38,31 +38,30 @@ public class Login extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
         setUndecorated(false);
 
-        // ── Animated Background Panel ─────────────────────────────────
+        // Animated Background Panel 
         BackgroundPanel bg = new BackgroundPanel();
         bg.setLayout(new GridBagLayout());
 
-        // ── Card Panel ────────────────────────────────────────────────
+        // Card Panel 
         CardPanel card = new CardPanel();
         card.setPreferredSize(new Dimension(360, 450));
         card.setLayout(null);
         card.setOpaque(false);
 
-        // ── Logo ─────────────────────────────────────────────────────
+        // Logo 
         ImageIcon rawIcon = new ImageIcon("images/logo.png");
         Image scaled = rawIcon.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
         JLabel icon = new JLabel(new ImageIcon(scaled), SwingConstants.CENTER);
         icon.setBounds(145, 28, 70, 70);
         card.add(icon);
 
-        // ── Title ─────────────────────────────────────────────────────
+        // Title 
         JLabel title = new JLabel("SMART INVENTORY", SwingConstants.CENTER);
         title.setForeground(TEXT_PRIMARY);
         title.setFont(loadFont("Segoe UI", Font.BOLD, 16));
         title.setBounds(30, 115, 300, 26);
         card.add(title);
 
-        // Decorative accent line under title
         JSeparator sep = new JSeparator() {
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g;
@@ -86,7 +85,7 @@ public class Login extends JFrame implements ActionListener {
         subtitle.setBounds(30, 152, 300, 20);
         card.add(subtitle);
 
-        // ── Username Field ────────────────────────────────────────────
+        // Username Field 
         JLabel userLbl = new JLabel("USERNAME");
         userLbl.setForeground(TEXT_MUTED);
         userLbl.setFont(new Font("Segoe UI", Font.BOLD, 10));
@@ -100,7 +99,7 @@ public class Login extends JFrame implements ActionListener {
         t1.addActionListener(this);
         card.add(t1);
 
-        // ── Password Field ────────────────────────────────────────────
+        // Password Field 
         JLabel passLbl = new JLabel("PASSWORD");
         passLbl.setForeground(TEXT_MUTED);
         passLbl.setFont(new Font("Segoe UI", Font.BOLD, 10));
@@ -114,7 +113,7 @@ public class Login extends JFrame implements ActionListener {
         t2.addActionListener(this); 
         card.add(t2);
 
-        // ── Forgot Password ───────────────────────────────────────────
+        // Forgot Password 
         JLabel forgot = new JLabel("Forgot password?");
         forgot.setForeground(ACCENT);
         forgot.setFont(new Font("Segoe UI", Font.PLAIN, 11));
@@ -122,13 +121,13 @@ public class Login extends JFrame implements ActionListener {
         forgot.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         card.add(forgot);
 
-        // ── Login Button ──────────────────────────────────────────────
+        // Login Button 
         b1 = new GlowButton("Sign In");
         b1.setBounds(40, 368, 280, 48);
         b1.addActionListener(this);
         card.add(b1);
 
-        // ── Footer ────────────────────────────────────────────────────
+        // Footer
         JLabel footer = new JLabel("© 2026 Smart Inventory System", SwingConstants.CENTER);
         footer.setForeground(new Color(80, 95, 140));
         footer.setFont(new Font("Segoe UI", Font.PLAIN, 10));
@@ -140,7 +139,7 @@ public class Login extends JFrame implements ActionListener {
         setVisible(true);
     }
 
-    // ── Field Styling ──────────────────────────────────────────────────
+    // Field Styling
     void styleField(JTextField field) {
         field.setOpaque(false);
         field.setBackground(FIELD_BG);
@@ -204,7 +203,7 @@ public class Login extends JFrame implements ActionListener {
         return new Font(name, style, size);
     }
 
-    // ── Action Handler ─────────────────────────────────────────────────
+    // Action Handler
     public void actionPerformed(ActionEvent e) {
         String user = t1.getText().trim();
         String pass = new String(t2.getPassword());
@@ -255,11 +254,7 @@ public class Login extends JFrame implements ActionListener {
         SwingUtilities.invokeLater(Login::new);
     }
 
-    // ══════════════════════════════════════════════════════════════════
     // Inner Classes
-    // ══════════════════════════════════════════════════════════════════
-
-    /** Animated starfield + gradient background */
     static class BackgroundPanel extends JPanel {
         private final int[][] stars;
         private final Timer timer;
@@ -282,12 +277,10 @@ public class Login extends JFrame implements ActionListener {
             Graphics2D g2 = (Graphics2D) g;
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-            // Background gradient
             GradientPaint gp = new GradientPaint(0, 0, BG_TOP, 0, getHeight(), BG_BTM);
             g2.setPaint(gp);
             g2.fillRect(0, 0, getWidth(), getHeight());
 
-            // Subtle radial glow at center
             RadialGradientPaint rgp = new RadialGradientPaint(
                     new Point2D.Float(getWidth() / 2f, getHeight() / 2f),
                     getWidth() * 0.6f,
@@ -297,14 +290,12 @@ public class Login extends JFrame implements ActionListener {
             g2.setPaint(rgp);
             g2.fillRect(0, 0, getWidth(), getHeight());
 
-            // Twinkling stars
             for (int[] s : stars) {
                 float alpha = 0.3f + 0.5f * (float) Math.abs(Math.sin(phase + s[0] * 0.1f));
                 g2.setColor(new Color(180, 210, 255, (int)(alpha * 255)));
                 g2.fillOval(s[0], s[1], s[2], s[2]);
             }
 
-            // Decorative corner geometry
             g2.setColor(new Color(82, 153, 255, 15));
             g2.setStroke(new BasicStroke(1f));
             g2.drawLine(0, 60, 80, 0);
@@ -315,7 +306,6 @@ public class Login extends JFrame implements ActionListener {
         }
     }
 
-    /** Frosted glass card with rounded corners and glow border */
     static class CardPanel extends JPanel {
         protected void paintComponent(Graphics g) {
             Graphics2D g2 = (Graphics2D) g;
@@ -344,7 +334,6 @@ public class Login extends JFrame implements ActionListener {
         }
     }
 
-    /** Glowing animated login button */
     static class GlowButton extends JButton {
         private float glowAlpha = 0f;
         private boolean hovering = false;
@@ -421,7 +410,6 @@ public class Login extends JFrame implements ActionListener {
         }
     }
 
-    /** Custom rounded border for text fields */
     static class RoundedBorder extends AbstractBorder {
         private final int radius;
         private final Color borderColor;
