@@ -3,20 +3,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
 
-/**
- * Premium dialog replacement for JOptionPane.
- *
- * Usage (Login — default messages):
- *   FancyDialog.showSuccess(parent, "Welcome back, admin!");
- *   FancyDialog.showError(parent, "Invalid username or password.");
- *
- * Usage (Other screens — custom heading + subtitle):
- *   FancyDialog.showSuccess(parent, "Product added!", "Product Added", "Product has been saved to inventory.");
- *   FancyDialog.showError(parent, "Please enter name.", "Add Product Failed", "Please check the product details.");
- */
 public class FancyDialog extends JDialog {
 
-    // ── Palette ────────────────────────────────────────────────────────
+    // Color Palette 
     static final Color BG          = new Color(22,  28,  56);
     static final Color BORDER_COL  = new Color(82, 153, 255, 46);
     static final Color TEXT_PRI    = new Color(232, 238, 248);
@@ -26,10 +15,7 @@ public class FancyDialog extends JDialog {
     static final Color SUCCESS_COL = new Color(90,  200, 140);
     static final Color ERROR_COL   = new Color(255, 100, 100);
 
-    // ══════════════════════════════════════════════════════════════════
     // FACTORY METHODS — Login (default messages)
-    // ══════════════════════════════════════════════════════════════════
-
     public static void showSuccess(JFrame parent, String message) {
         showSuccess(parent, message,
                 "Login Successful",
@@ -42,10 +28,7 @@ public class FancyDialog extends JDialog {
                 "Please check your credentials and try again.");
     }
 
-    // ══════════════════════════════════════════════════════════════════
-    // FACTORY METHODS — Custom heading + subtitle (all other screens)
-    // ══════════════════════════════════════════════════════════════════
-
+    // Custom heading + subtitle (all other screens)
     public static void showSuccess(JFrame parent, String message,
                                    String heading, String subtitle) {
         applyLookAndFeel();
@@ -60,20 +43,12 @@ public class FancyDialog extends JDialog {
                 ERROR_COL, "✕").setVisible(true);
     }
 
-    // ══════════════════════════════════════════════════════════════════
-    // HELPER
-    // ══════════════════════════════════════════════════════════════════
-
     private static void applyLookAndFeel() {
         try {
             UIManager.setLookAndFeel(
                     UIManager.getCrossPlatformLookAndFeelClassName());
         } catch (Exception ignored) {}
     }
-
-    // ══════════════════════════════════════════════════════════════════
-    // CONSTRUCTOR
-    // ══════════════════════════════════════════════════════════════════
 
     private FancyDialog(JFrame parent, String heading, String body,
                         String sub, Color accentColor, String iconText) {
@@ -88,25 +63,22 @@ public class FancyDialog extends JDialog {
         root.setPreferredSize(new Dimension(420, 250));
         root.setOpaque(false);
 
-        // ── Card ──────────────────────────────────────────────────────
         JPanel card = new JPanel(null) {
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g;
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                         RenderingHints.VALUE_ANTIALIAS_ON);
 
-                // Drop shadow
                 for (int i = 14; i > 0; i--) {
                     g2.setColor(new Color(0, 0, 0, 7));
                     g2.fillRoundRect(-i, -i/2, getWidth()+i*2,
                             getHeight()+i, 28+i, 28+i);
                 }
 
-                // Card bg
+                
                 g2.setColor(BG);
                 g2.fillRoundRect(0, 0, getWidth()-1, getHeight()-1, 22, 22);
 
-                // Top accent bar
                 GradientPaint bar = new GradientPaint(
                         0, 0, accentColor,
                         getWidth(), 0,
@@ -118,7 +90,6 @@ public class FancyDialog extends JDialog {
                 g2.fillRect(0, 0, getWidth(), 5);
                 g2.setClip(null);
 
-                // Card border
                 g2.setColor(BORDER_COL);
                 g2.setStroke(new BasicStroke(1f));
                 g2.drawRoundRect(0, 0, getWidth()-1, getHeight()-1, 22, 22);
@@ -127,7 +98,6 @@ public class FancyDialog extends JDialog {
         card.setOpaque(false);
         card.setBounds(0, 0, 420, 250);
 
-        // ── Icon circle ───────────────────────────────────────────────
         JLabel iconLbl = new JLabel(iconText, SwingConstants.CENTER) {
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g;
@@ -148,7 +118,6 @@ public class FancyDialog extends JDialog {
         iconLbl.setBounds(26, 28, 52, 52);
         card.add(iconLbl);
 
-        // ── Heading tag ───────────────────────────────────────────────
         JLabel tagLbl = new JLabel(heading.toUpperCase());
         tagLbl.setFont(new Font("Segoe UI", Font.BOLD, 10));
         tagLbl.setForeground(new Color(accentColor.getRed(),
@@ -156,7 +125,6 @@ public class FancyDialog extends JDialog {
         tagLbl.setBounds(96, 28, 300, 16);
         card.add(tagLbl);
 
-        // ── Body message ──────────────────────────────────────────────
         JLabel bodyLbl = new JLabel(
                 "<html><body style='width:270px'>" + body + "</body></html>");
         bodyLbl.setFont(new Font("Segoe UI", Font.BOLD, 14));
@@ -164,7 +132,6 @@ public class FancyDialog extends JDialog {
         bodyLbl.setBounds(96, 48, 300, 42);
         card.add(bodyLbl);
 
-        // ── Subtitle ──────────────────────────────────────────────────
         JLabel subLbl = new JLabel(
                 "<html><body style='width:270px'>" + sub + "</body></html>");
         subLbl.setFont(new Font("Segoe UI", Font.PLAIN, 11));
@@ -172,7 +139,6 @@ public class FancyDialog extends JDialog {
         subLbl.setBounds(96, 94, 300, 36);
         card.add(subLbl);
 
-        // ── Divider ───────────────────────────────────────────────────
         JPanel divider = new JPanel() {
             protected void paintComponent(Graphics g) {
                 g.setColor(new Color(255, 255, 255, 18));
@@ -183,13 +149,11 @@ public class FancyDialog extends JDialog {
         divider.setBounds(22, 154, 376, 1);
         card.add(divider);
 
-        // ── Dismiss button ────────────────────────────────────────────
         JButton dismiss = createButton("Dismiss", false, accentColor);
         dismiss.setBounds(186, 166, 90, 38);
         dismiss.addActionListener(ev -> dispose());
         card.add(dismiss);
 
-        // ── Continue button ───────────────────────────────────────────
         JButton cont = createButton("Continue", true, accentColor);
         cont.setBounds(288, 166, 110, 38);
         cont.addActionListener(ev -> dispose());
@@ -198,22 +162,16 @@ public class FancyDialog extends JDialog {
         root.add(card, JLayeredPane.DEFAULT_LAYER);
         setContentPane(root);
 
-        // Click outside to close
         addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) { dispose(); }
         });
 
-        // ESC to close
         getRootPane().registerKeyboardAction(
                 ev -> dispose(),
                 KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ESCAPE, 0),
                 JComponent.WHEN_IN_FOCUSED_WINDOW
         );
     }
-
-    // ══════════════════════════════════════════════════════════════════
-    // BUTTON HELPER
-    // ══════════════════════════════════════════════════════════════════
 
     private JButton createButton(String text, boolean filled, Color accentColor) {
         JButton btn = new JButton(text) {
@@ -228,7 +186,6 @@ public class FancyDialog extends JDialog {
                             0, 0, c1, 0, getHeight(), c1.darker());
                     g2.setPaint(gp);
                     g2.fillRoundRect(0, 0, getWidth()-1, getHeight()-1, 10, 10);
-                    // Shine
                     g2.setColor(new Color(255, 255, 255, 35));
                     g2.fillRoundRect(1, 1, getWidth()-2, getHeight()/2-2, 9, 9);
                 } else {
