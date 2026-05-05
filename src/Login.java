@@ -267,7 +267,7 @@ public class Login extends JFrame implements ActionListener {
 
         BackgroundPanel() {
             setOpaque(true);
-            stars = new int[60][3]; // x, y, size
+            stars = new int[60][3]; 
             java.util.Random rng = new java.util.Random();
             for (int[] s : stars) {
                 s[0] = rng.nextInt(480);
