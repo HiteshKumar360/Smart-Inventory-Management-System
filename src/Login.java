@@ -48,8 +48,8 @@ public class Login extends JFrame implements ActionListener {
         card.setLayout(null);
         card.setOpaque(false);
 
-        // ── Logo / Icon ───────────────────────────────────────────────
-        ImageIcon rawIcon = new ImageIcon("images/logo.png"); // put logo.png in your project root folder
+        // ── Logo
+        ImageIcon rawIcon = new ImageIcon("images/logo.png");
         Image scaled = rawIcon.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
         JLabel icon = new JLabel(new ImageIcon(scaled), SwingConstants.CENTER);
         icon.setBounds(145, 28, 70, 70);
@@ -97,7 +97,7 @@ public class Login extends JFrame implements ActionListener {
         t1.setBounds(40, 214, 280, 44);
         styleField(t1);
         addPlaceholder(t1, "Enter your username");
-        t1.addActionListener(this); // pressing Enter in username field triggers login
+        t1.addActionListener(this);
         card.add(t1);
 
         // ── Password Field ────────────────────────────────────────────
@@ -111,7 +111,7 @@ public class Login extends JFrame implements ActionListener {
         t2.setBounds(40, 291, 280, 44);
         styleField(t2);
         addPasswordPlaceholder(t2, "Enter your password");
-        t2.addActionListener(this); // pressing Enter in password field triggers login
+        t2.addActionListener(this); 
         card.add(t2);
 
         // ── Forgot Password ───────────────────────────────────────────
