@@ -99,7 +99,7 @@ public class Dashboard extends JFrame implements ActionListener {
         JButton[] navBtns = new JButton[8];
         for (int i = 0; i < MENU_ITEMS.length; i++) {
             String label   = (String) MENU_ITEMS[i][0];
-            String imgPath = (String) MENU_ITEMS[i][1]; // sidebar icon
+            String imgPath = (String) MENU_ITEMS[i][1]; 
             Color  color   = (Color)  MENU_ITEMS[i][2];
             JButton btn = createNavButton(label, imgPath, color);
             navBtns[i] = btn;
@@ -117,7 +117,7 @@ public class Dashboard extends JFrame implements ActionListener {
         version.setBorder(BorderFactory.createEmptyBorder(0, 0, 14, 0));
         sidebar.add(version, BorderLayout.SOUTH);
 
-        // MAIN CONTENT — light / white
+        // MAIN CONTENT
         MainPanel main = new MainPanel();
         main.setLayout(new BorderLayout());
 
