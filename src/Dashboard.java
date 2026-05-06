@@ -20,7 +20,6 @@ public class Dashboard extends JFrame implements ActionListener {
     static final Color TEXT_PRIMARY    = new Color(25,  30,  60);
     static final Color TEXT_MUTED      = new Color(100, 115, 155);
 
-    // Menu Items
     static final Object[][] MENU_ITEMS = {
             { "Add Product",    "images/add.png",    new Color(82,  200, 140), "Add new inventory item", "images/add_1.png"    },
             { "View Products",  "images/view.png",   new Color(82,  153, 255), "Browse all products",    "images/view_1.png"   },
@@ -47,7 +46,6 @@ public class Dashboard extends JFrame implements ActionListener {
         root.setOpaque(true);
         root.setBackground(new Color(245, 247, 255));
 
-        // SIDEBAR
         SidebarPanel sidebar = new SidebarPanel();
         sidebar.setPreferredSize(new Dimension(230, 0));
         sidebar.setLayout(new BorderLayout());
@@ -115,7 +113,6 @@ public class Dashboard extends JFrame implements ActionListener {
         version.setBorder(BorderFactory.createEmptyBorder(0, 0, 14, 0));
         sidebar.add(version, BorderLayout.SOUTH);
 
-        // MAIN CONTENT
         MainPanel main = new MainPanel();
         main.setLayout(new BorderLayout());
 
