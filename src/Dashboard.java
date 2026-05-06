@@ -8,13 +8,13 @@ public class Dashboard extends JFrame implements ActionListener {
 
     JButton b1, b2, b3, b4, b5, b6, b7, b8;
 
-    // ── Sidebar Colors (dark navy — matches Login) ────────────────────
+    // Sidebar Colors 
     static final Color SIDEBAR_BG      = new Color(10,  13,  28, 255);
     static final Color SIDEBAR_TEXT    = new Color(230, 235, 255);
     static final Color SIDEBAR_MUTED   = new Color(160, 175, 210);
     static final Color SIDEBAR_ACCENT  = new Color(82,  153, 255);
 
-    // ── Main Area Colors (light / white) ──────────────────────────────
+    // Main Area Colors 
     static final Color MAIN_BG_TOP     = new Color(245, 247, 255);
     static final Color MAIN_BG_BTM     = new Color(230, 235, 252);
     static final Color CARD_FILL       = new Color(255, 255, 255, 245);
@@ -22,12 +22,7 @@ public class Dashboard extends JFrame implements ActionListener {
     static final Color TEXT_PRIMARY    = new Color(25,  30,  60);
     static final Color TEXT_MUTED      = new Color(100, 115, 155);
 
-    // ── Menu Items ────────────────────────────────────────────────────
-    // index 0 = label
-    // index 1 = sidebar icon (original/dark)
-    // index 2 = accent color
-    // index 3 = subtitle
-    // index 4 = card icon (colored version)
+    // Menu Items
     static final Object[][] MENU_ITEMS = {
             { "Add Product",    "images/add.png",    new Color(82,  200, 140), "Add new inventory item", "images/add_1.png"    },
             { "View Products",  "images/view.png",   new Color(82,  153, 255), "Browse all products",    "images/view_1.png"   },
@@ -54,14 +49,11 @@ public class Dashboard extends JFrame implements ActionListener {
         root.setOpaque(true);
         root.setBackground(new Color(245, 247, 255));
 
-        // ══════════════════════════════════════════════════════════════
-        // SIDEBAR — dark navy, animated stars
-        // ══════════════════════════════════════════════════════════════
+        // SIDEBAR
         SidebarPanel sidebar = new SidebarPanel();
         sidebar.setPreferredSize(new Dimension(230, 0));
         sidebar.setLayout(new BorderLayout());
 
-        // Sidebar Top
         JPanel sideTop = new JPanel(null);
         sideTop.setPreferredSize(new Dimension(230, 115));
         sideTop.setOpaque(false);
@@ -84,7 +76,6 @@ public class Dashboard extends JFrame implements ActionListener {
         appSub.setBounds(70, 47, 145, 16);
         sideTop.add(appSub);
 
-        // Accent gradient separator
         JPanel sepLine = new JPanel() {
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g;
@@ -100,7 +91,6 @@ public class Dashboard extends JFrame implements ActionListener {
         sideTop.add(sepLine);
         sidebar.add(sideTop, BorderLayout.NORTH);
 
-        // Sidebar Nav
         JPanel navPanel = new JPanel();
         navPanel.setLayout(new BoxLayout(navPanel, BoxLayout.Y_AXIS));
         navPanel.setOpaque(false);
@@ -121,20 +111,16 @@ public class Dashboard extends JFrame implements ActionListener {
         b5 = navBtns[4]; b6 = navBtns[5]; b7 = navBtns[6]; b8 = navBtns[7];
         sidebar.add(navPanel, BorderLayout.CENTER);
 
-        // Sidebar Footer
         JLabel version = new JLabel("v1.0  ·  © 2026", SwingConstants.CENTER);
         version.setForeground(new Color(60, 75, 120));
         version.setFont(new Font("Segoe UI", Font.PLAIN, 10));
         version.setBorder(BorderFactory.createEmptyBorder(0, 0, 14, 0));
         sidebar.add(version, BorderLayout.SOUTH);
 
-        // ══════════════════════════════════════════════════════════════
         // MAIN CONTENT — light / white
-        // ══════════════════════════════════════════════════════════════
         MainPanel main = new MainPanel();
         main.setLayout(new BorderLayout());
 
-        // Top Bar
         JPanel topBar = new JPanel(null) {
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g;
@@ -160,12 +146,11 @@ public class Dashboard extends JFrame implements ActionListener {
         topBar.add(greeting);
         main.add(topBar, BorderLayout.NORTH);
 
-        // Live clock — updates every second
+        // clock
         new Timer(1000, e -> greeting.setText(
                 "Welcome back, Admin  ·  " + getDateTime()
         )).start();
 
-        // Center: Stats + Cards
         JPanel centerStack = new JPanel(new BorderLayout());
         centerStack.setOpaque(false);
         centerStack.add(createStatsBar(), BorderLayout.NORTH);
@@ -174,11 +159,10 @@ public class Dashboard extends JFrame implements ActionListener {
         cardsArea.setOpaque(false);
         cardsArea.setBorder(BorderFactory.createEmptyBorder(16, 28, 22, 28));
 
-        // Cards use index [4] — colored icons
         for (Object[] item : MENU_ITEMS) {
             cardsArea.add(createCard(
                     (String) item[0],
-                    (String) item[4], // colored card icon
+                    (String) item[4], 
                     (Color)  item[2]
             ));
         }
@@ -209,9 +193,7 @@ public class Dashboard extends JFrame implements ActionListener {
         checkLowStock();
     }
 
-    // ══════════════════════════════════════════════════════════════════
     // STATS BAR
-    // ══════════════════════════════════════════════════════════════════
     JPanel createStatsBar() {
         JPanel stats = new JPanel(new GridLayout(1, 4, 16, 0));
         stats.setOpaque(false);
@@ -230,23 +212,19 @@ public class Dashboard extends JFrame implements ActionListener {
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                         RenderingHints.VALUE_ANTIALIAS_ON);
 
-                // Drop shadow
                 for (int i = 5; i > 0; i--) {
                     g2.setColor(new Color(0, 0, 0, 6));
                     g2.fillRoundRect(-i/2, i, getWidth()+i, getHeight()+i/2, 16+i, 16+i);
                 }
 
-                // White card
                 g2.setColor(CARD_FILL);
                 g2.fillRoundRect(0, 0, getWidth()-1, getHeight()-1, 14, 14);
 
-                // Accent left bar
                 g2.setColor(accent);
                 g2.setClip(new RoundRectangle2D.Float(0, 0, getWidth()-1, getHeight()-1, 14, 14));
                 g2.fillRect(0, 0, 4, getHeight());
                 g2.setClip(null);
 
-                // Bottom accent strip
                 GradientPaint strip = new GradientPaint(
                         0, 0,
                         new Color(accent.getRed(), accent.getGreen(), accent.getBlue(), 180),
@@ -257,7 +235,6 @@ public class Dashboard extends JFrame implements ActionListener {
                 g2.fillRect(0, getHeight()-3, getWidth(), 3);
                 g2.setClip(null);
 
-                // Subtle top tint
                 GradientPaint tint = new GradientPaint(
                         0, 0,
                         new Color(accent.getRed(), accent.getGreen(), accent.getBlue(), 18),
@@ -265,7 +242,6 @@ public class Dashboard extends JFrame implements ActionListener {
                 g2.setPaint(tint);
                 g2.fillRoundRect(0, 0, getWidth()-1, getHeight()-1, 14, 14);
 
-                // Border
                 g2.setColor(new Color(accent.getRed(), accent.getGreen(), accent.getBlue(), 50));
                 g2.setStroke(new BasicStroke(1f));
                 g2.drawRoundRect(0, 0, getWidth()-1, getHeight()-1, 14, 14);
@@ -289,9 +265,7 @@ public class Dashboard extends JFrame implements ActionListener {
         return card;
     }
 
-    // ══════════════════════════════════════════════════════════════════
-    // NAV BUTTON — uses index [1] sidebar icon
-    // ══════════════════════════════════════════════════════════════════
+    // NAV BUTTON 
     JButton createNavButton(String label, String imgPath, Color accent) {
         Image navImg = loadImage(imgPath, 22);
 
@@ -321,12 +295,11 @@ public class Dashboard extends JFrame implements ActionListener {
                     g2.setColor(new Color(accent.getRed(), accent.getGreen(),
                             accent.getBlue(), (int)(glowAlpha * 25)));
                     g2.fillRoundRect(10, 2, getWidth()-20, getHeight()-4, 10, 10);
-                    // Left accent pill
+        
                     g2.setColor(accent);
                     g2.fillRoundRect(10, 6, 3, getHeight()-12, 3, 3);
                 }
 
-                // Icon circle — white bg so colored icons show on dark sidebar
                 g2.setColor(new Color(255, 255, 255, (int)(30 + glowAlpha * 40)));
                 g2.fillOval(18, (getHeight()-28)/2, 28, 28);
                 g2.setColor(new Color(accent.getRed(), accent.getGreen(),
@@ -354,9 +327,7 @@ public class Dashboard extends JFrame implements ActionListener {
         return btn;
     }
 
-    // ══════════════════════════════════════════════════════════════════
     // DASHBOARD CARD — uses index [4] colored icon
-    // ══════════════════════════════════════════════════════════════════
     JPanel createCard(String label, String imgPath, Color accent) {
         Image cardImg = loadImage(imgPath, 40);
 
@@ -395,7 +366,6 @@ public class Dashboard extends JFrame implements ActionListener {
                 int px = (int)((w - w*scale)/2), py = (int)((h - h*scale)/2);
                 int sw = (int)(w*scale),          sh = (int)(h*scale);
 
-                // Drop shadow
                 if (hovered) {
                     for (int i = 10; i > 0; i--) {
                         g2.setColor(new Color(accent.getRed(), accent.getGreen(),
@@ -409,11 +379,9 @@ public class Dashboard extends JFrame implements ActionListener {
                     }
                 }
 
-                // White card
                 g2.setColor(CARD_FILL);
                 g2.fillRoundRect(px, py, sw-1, sh-1, 16, 16);
 
-                // Top accent strip
                 GradientPaint strip = new GradientPaint(
                         px, py,
                         new Color(accent.getRed(), accent.getGreen(), accent.getBlue(), 230),
@@ -424,21 +392,18 @@ public class Dashboard extends JFrame implements ActionListener {
                 g2.fillRect(px, py, sw, 5);
                 g2.setClip(null);
 
-                // Subtle hover tint
                 if (hovered) {
                     g2.setColor(new Color(accent.getRed(), accent.getGreen(),
                             accent.getBlue(), 10));
                     g2.fillRoundRect(px, py, sw-1, sh-1, 16, 16);
                 }
 
-                // Border
                 g2.setColor(hovered
                         ? new Color(accent.getRed(), accent.getGreen(), accent.getBlue(), 80)
                         : CARD_BORDER);
                 g2.setStroke(new BasicStroke(1f));
                 g2.drawRoundRect(px, py, sw-1, sh-1, 16, 16);
 
-                // Icon circle
                 int cx = px + sw/2, cy = py + sh/2 - 22;
                 g2.setColor(new Color(accent.getRed(), accent.getGreen(),
                         accent.getBlue(), 20));
@@ -448,12 +413,10 @@ public class Dashboard extends JFrame implements ActionListener {
                 g2.setStroke(new BasicStroke(1.5f));
                 g2.drawOval(cx-34, cy-34, 68, 68);
 
-                // Colored card icon
                 if (cardImg != null) {
                     g2.drawImage(cardImg, cx-20, cy-20, null);
                 }
 
-                // Label
                 g2.setFont(new Font("Segoe UI", Font.BOLD, 12));
                 g2.setColor(TEXT_PRIMARY);
                 FontMetrics fm = g2.getFontMetrics();
@@ -461,7 +424,6 @@ public class Dashboard extends JFrame implements ActionListener {
                         px + (sw - fm.stringWidth(label))/2,
                         py + sh - 26);
 
-                // Subtitle
                 String subtitle = "";
                 for (Object[] item : MENU_ITEMS) {
                     if (item[0].equals(label)) {
@@ -481,9 +443,7 @@ public class Dashboard extends JFrame implements ActionListener {
         return card;
     }
 
-    // ══════════════════════════════════════════════════════════════════
     // IMAGE LOADER
-    // ══════════════════════════════════════════════════════════════════
     Image loadImage(String path, int size) {
         try {
             ImageIcon raw = new ImageIcon(path);
@@ -495,9 +455,6 @@ public class Dashboard extends JFrame implements ActionListener {
         }
     }
 
-    // ══════════════════════════════════════════════════════════════════
-    // DB HELPERS
-    // ══════════════════════════════════════════════════════════════════
     String getTotalProducts() {
         try {
             ResultSet rs = DBConnection.getConnection().createStatement()
@@ -541,9 +498,7 @@ public class Dashboard extends JFrame implements ActionListener {
                 now.getSecond());
     }
 
-    // ══════════════════════════════════════════════════════════════════
     // LOW STOCK ALERT
-    // ══════════════════════════════════════════════════════════════════
     void checkLowStock() {
         try {
             ResultSet rs = DBConnection.getConnection().createStatement()
@@ -560,9 +515,7 @@ public class Dashboard extends JFrame implements ActionListener {
         } catch (Exception e) { e.printStackTrace(); }
     }
 
-    // ══════════════════════════════════════════════════════════════════
     // ACTION HANDLER
-    // ══════════════════════════════════════════════════════════════════
     public void actionPerformed(ActionEvent e) {
         if      (e.getSource() == b1) new AddProduct();
         else if (e.getSource() == b2) new ViewProducts();
@@ -574,9 +527,7 @@ public class Dashboard extends JFrame implements ActionListener {
         else if (e.getSource() == b8) { dispose(); new Login(); }
     }
 
-    // ══════════════════════════════════════════════════════════════════
-    // SIDEBAR PANEL — dark navy with twinkling stars
-    // ══════════════════════════════════════════════════════════════════
+    // SIDEBAR PANEL
     static class SidebarPanel extends JPanel {
         private final int[][] stars;
         private final Timer timer;
@@ -600,14 +551,12 @@ public class Dashboard extends JFrame implements ActionListener {
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                     RenderingHints.VALUE_ANTIALIAS_ON);
 
-            // Dark navy gradient — same as Login
             GradientPaint gp = new GradientPaint(
                     0, 0, new Color(10, 12, 20),
                     0, getHeight(), new Color(14, 18, 42));
             g2.setPaint(gp);
             g2.fillRect(0, 0, getWidth(), getHeight());
 
-            // Radial glow
             RadialGradientPaint rgp = new RadialGradientPaint(
                     new Point2D.Float(getWidth()/2f, getHeight()/2f),
                     getWidth() * 1.2f, new float[]{0f, 1f},
@@ -615,14 +564,12 @@ public class Dashboard extends JFrame implements ActionListener {
             g2.setPaint(rgp);
             g2.fillRect(0, 0, getWidth(), getHeight());
 
-            // Twinkling stars — same as Login
             for (int[] s : stars) {
                 float alpha = 0.3f + 0.5f * (float)Math.abs(Math.sin(phase + s[0]*0.1f));
                 g2.setColor(new Color(180, 210, 255, (int)(alpha * 255)));
                 g2.fillOval(s[0], s[1], s[2], s[2]);
             }
 
-            // Right border glow
             GradientPaint border = new GradientPaint(
                     getWidth()-8, 0, new Color(0, 0, 0, 0),
                     getWidth(), 0, new Color(82, 153, 255, 25));
@@ -634,9 +581,7 @@ public class Dashboard extends JFrame implements ActionListener {
         }
     }
 
-    // ══════════════════════════════════════════════════════════════════
     // MAIN PANEL — soft white/light gradient
-    // ══════════════════════════════════════════════════════════════════
     static class MainPanel extends JPanel {
         protected void paintComponent(Graphics g) {
             Graphics2D g2 = (Graphics2D) g;
