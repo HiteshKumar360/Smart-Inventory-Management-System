@@ -8,13 +8,11 @@ public class Dashboard extends JFrame implements ActionListener {
 
     JButton b1, b2, b3, b4, b5, b6, b7, b8;
 
-    // Sidebar Colors 
     static final Color SIDEBAR_BG      = new Color(10,  13,  28, 255);
     static final Color SIDEBAR_TEXT    = new Color(230, 235, 255);
     static final Color SIDEBAR_MUTED   = new Color(160, 175, 210);
     static final Color SIDEBAR_ACCENT  = new Color(82,  153, 255);
 
-    // Main Area Colors 
     static final Color MAIN_BG_TOP     = new Color(245, 247, 255);
     static final Color MAIN_BG_BTM     = new Color(230, 235, 252);
     static final Color CARD_FILL       = new Color(255, 255, 255, 245);
@@ -146,7 +144,6 @@ public class Dashboard extends JFrame implements ActionListener {
         topBar.add(greeting);
         main.add(topBar, BorderLayout.NORTH);
 
-        // clock
         new Timer(1000, e -> greeting.setText(
                 "Welcome back, Admin  ·  " + getDateTime()
         )).start();
@@ -169,7 +166,6 @@ public class Dashboard extends JFrame implements ActionListener {
         centerStack.add(cardsArea, BorderLayout.CENTER);
         main.add(centerStack, BorderLayout.CENTER);
 
-        // Status Bar
         JPanel statusBar = new JPanel(new FlowLayout(FlowLayout.LEFT, 16, 0)) {
             protected void paintComponent(Graphics g) {
                 g.setColor(new Color(255, 255, 255, 200));
@@ -193,7 +189,6 @@ public class Dashboard extends JFrame implements ActionListener {
         checkLowStock();
     }
 
-    // STATS BAR
     JPanel createStatsBar() {
         JPanel stats = new JPanel(new GridLayout(1, 4, 16, 0));
         stats.setOpaque(false);
@@ -265,7 +260,6 @@ public class Dashboard extends JFrame implements ActionListener {
         return card;
     }
 
-    // NAV BUTTON 
     JButton createNavButton(String label, String imgPath, Color accent) {
         Image navImg = loadImage(imgPath, 22);
 
@@ -327,7 +321,6 @@ public class Dashboard extends JFrame implements ActionListener {
         return btn;
     }
 
-    // DASHBOARD CARD — uses index [4] colored icon
     JPanel createCard(String label, String imgPath, Color accent) {
         Image cardImg = loadImage(imgPath, 40);
 
@@ -443,7 +436,6 @@ public class Dashboard extends JFrame implements ActionListener {
         return card;
     }
 
-    // IMAGE LOADER
     Image loadImage(String path, int size) {
         try {
             ImageIcon raw = new ImageIcon(path);
@@ -515,7 +507,6 @@ public class Dashboard extends JFrame implements ActionListener {
         } catch (Exception e) { e.printStackTrace(); }
     }
 
-    // ACTION HANDLER
     public void actionPerformed(ActionEvent e) {
         if      (e.getSource() == b1) new AddProduct();
         else if (e.getSource() == b2) new ViewProducts();
@@ -527,7 +518,6 @@ public class Dashboard extends JFrame implements ActionListener {
         else if (e.getSource() == b8) { dispose(); new Login(); }
     }
 
-    // SIDEBAR PANEL
     static class SidebarPanel extends JPanel {
         private final int[][] stars;
         private final Timer timer;
@@ -581,7 +571,6 @@ public class Dashboard extends JFrame implements ActionListener {
         }
     }
 
-    // MAIN PANEL — soft white/light gradient
     static class MainPanel extends JPanel {
         protected void paintComponent(Graphics g) {
             Graphics2D g2 = (Graphics2D) g;
