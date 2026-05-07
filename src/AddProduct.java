@@ -10,7 +10,6 @@ public class AddProduct extends JFrame implements ActionListener {
     JTextField t1, t2, t3, t4;
     JButton b1, b2;
 
-    // ── Colors matching Dashboard ─────────────────────────────────────
     static final Color BG_TOP       = new Color(245, 247, 255);
     static final Color BG_BTM       = new Color(230, 235, 252);
     static final Color CARD_FILL    = new Color(255, 255, 255, 245);
@@ -28,7 +27,6 @@ public class AddProduct extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
         setResizable(false);
 
-        // ── Background ────────────────────────────────────────────────
         JPanel bg = new JPanel() {
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g;
@@ -38,7 +36,6 @@ public class AddProduct extends JFrame implements ActionListener {
                 g2.setPaint(gp);
                 g2.fillRect(0, 0, getWidth(), getHeight());
 
-                // Subtle radial glow
                 RadialGradientPaint rgp = new RadialGradientPaint(
                         new Point2D.Float(getWidth()/2f, getHeight()/3f),
                         getWidth() * 0.7f, new float[]{0f, 1f},
@@ -49,24 +46,20 @@ public class AddProduct extends JFrame implements ActionListener {
         };
         bg.setLayout(new GridBagLayout());
 
-        // ── Card ──────────────────────────────────────────────────────
         JPanel card = new JPanel(null) {
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g;
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                         RenderingHints.VALUE_ANTIALIAS_ON);
 
-                // Drop shadow
                 for (int i = 8; i > 0; i--) {
                     g2.setColor(new Color(0, 0, 0, 5));
                     g2.fillRoundRect(-i/2, i, getWidth()+i, getHeight()+i/2, 22+i, 22+i);
                 }
 
-                // White card
                 g2.setColor(CARD_FILL);
                 g2.fillRoundRect(0, 0, getWidth()-1, getHeight()-1, 20, 20);
 
-                // Top accent strip
                 GradientPaint strip = new GradientPaint(
                         0, 0,
                         new Color(ACCENT.getRed(), ACCENT.getGreen(), ACCENT.getBlue(), 230),
@@ -77,14 +70,12 @@ public class AddProduct extends JFrame implements ActionListener {
                 g2.fillRect(0, 0, getWidth(), 5);
                 g2.setClip(null);
 
-                // Subtle top tint
                 GradientPaint tint = new GradientPaint(
                         0, 0, new Color(ACCENT.getRed(), ACCENT.getGreen(), ACCENT.getBlue(), 12),
                         0, getHeight()/3, new Color(0, 0, 0, 0));
                 g2.setPaint(tint);
                 g2.fillRoundRect(0, 0, getWidth()-1, getHeight()-1, 20, 20);
 
-                // Border
                 g2.setColor(new Color(ACCENT.getRed(), ACCENT.getGreen(), ACCENT.getBlue(), 60));
                 g2.setStroke(new BasicStroke(1f));
                 g2.drawRoundRect(0, 0, getWidth()-1, getHeight()-1, 20, 20);
@@ -93,7 +84,6 @@ public class AddProduct extends JFrame implements ActionListener {
         card.setPreferredSize(new Dimension(375, 500));
         card.setOpaque(false);
 
-        // ── Header Icon ───────────────────────────────────────────────
         try {
             ImageIcon addIcon = new ImageIcon("images/add_1.png");
             if (addIcon.getIconWidth() > 0) {
@@ -102,7 +92,6 @@ public class AddProduct extends JFrame implements ActionListener {
                 icon.setBounds(0, 22, 375, 56);
                 card.add(icon);
             } else {
-                // Fallback: draw icon circle with + symbol
                 JLabel icon = new JLabel("+", SwingConstants.CENTER) {
                     protected void paintComponent(Graphics g) {
                         Graphics2D g2 = (Graphics2D) g;
@@ -131,7 +120,6 @@ public class AddProduct extends JFrame implements ActionListener {
             card.add(icon);
         }
 
-        // ── Title ─────────────────────────────────────────────────────
         JLabel title = new JLabel("Add New Product", SwingConstants.CENTER);
         title.setForeground(TEXT_PRIMARY);
         title.setFont(new Font("Segoe UI", Font.BOLD, 18));
@@ -144,7 +132,6 @@ public class AddProduct extends JFrame implements ActionListener {
         subtitle.setBounds(0, 108, 375, 18);
         card.add(subtitle);
 
-        // Divider
         JPanel divider = new JPanel() {
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g;
@@ -159,19 +146,16 @@ public class AddProduct extends JFrame implements ActionListener {
         divider.setOpaque(false);
         card.add(divider);
 
-        // ── Fields ────────────────────────────────────────────────────
         t1 = createField(card, "PRODUCT NAME", "Enter product name", 142);
         t2 = createField(card, "CATEGORY",     "Enter category",     212);
         t3 = createField(card, "PRICE (₹)",    "Enter price",        282);
         t4 = createField(card, "QUANTITY",     "Enter quantity",     352);
 
-        // Enter key navigation between fields
         t1.addActionListener(ev -> t2.requestFocus());
         t2.addActionListener(ev -> t3.requestFocus());
         t3.addActionListener(ev -> t4.requestFocus());
         t4.addActionListener(this);
 
-        // ── Save Button ───────────────────────────────────────────────
         b1 = new JButton("Save Product") {
             boolean hovered = false;
             float glow = 0f;
@@ -193,7 +177,6 @@ public class AddProduct extends JFrame implements ActionListener {
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                         RenderingHints.VALUE_ANTIALIAS_ON);
 
-                // Outer glow
                 if (glow > 0) {
                     for (int i = 6; i > 0; i--) {
                         g2.setColor(new Color(82, 200, 140, (int)(glow * 15)));
@@ -201,7 +184,6 @@ public class AddProduct extends JFrame implements ActionListener {
                     }
                 }
 
-                // Gradient fill
                 Color c1 = new Color(
                         (int)(60  + glow * 22),
                         (int)(180 + glow * 20),
@@ -214,20 +196,17 @@ public class AddProduct extends JFrame implements ActionListener {
                 g2.setPaint(gp);
                 g2.fillRoundRect(0, 0, getWidth(), getHeight(), 10, 10);
 
-                // Shine
                 g2.setColor(new Color(255, 255, 255, 40));
                 g2.fillRoundRect(1, 1, getWidth()-2, getHeight()/2-2, 10, 10);
 
-                // Border
                 g2.setColor(new Color(60, 180, 120, 150));
                 g2.setStroke(new BasicStroke(1f));
                 g2.drawRoundRect(0, 0, getWidth()-1, getHeight()-1, 10, 10);
 
-                // Text
                 g2.setFont(new Font("Segoe UI", Font.BOLD, 13));
                 g2.setColor(Color.WHITE);
                 FontMetrics fm = g2.getFontMetrics();
-                // Shadow
+                
                 g2.setColor(new Color(0, 80, 40, 80));
                 g2.drawString(getText(),
                         (getWidth()  - fm.stringWidth(getText()))/2 + 1,
@@ -247,7 +226,6 @@ public class AddProduct extends JFrame implements ActionListener {
         b1.addActionListener(this);
         card.add(b1);
 
-        // ── Clear Button ──────────────────────────────────────────────
         b2 = new JButton("Clear") {
             boolean hovered = false;
             {
@@ -289,7 +267,6 @@ public class AddProduct extends JFrame implements ActionListener {
         setVisible(true);
     }
 
-    // ── Clear Fields ──────────────────────────────────────────────────
     void clearFields() {
         t1.setText("Enter product name"); t1.setForeground(TEXT_MUTED);
         t2.setText("Enter category");     t2.setForeground(TEXT_MUTED);
@@ -298,7 +275,6 @@ public class AddProduct extends JFrame implements ActionListener {
         t1.requestFocus();
     }
 
-    // ── Field Factory ─────────────────────────────────────────────────
     JTextField createField(JPanel parent, String labelText, String placeholder, int y) {
         JLabel lbl = new JLabel(labelText);
         lbl.setForeground(TEXT_MUTED);
@@ -337,14 +313,12 @@ public class AddProduct extends JFrame implements ActionListener {
         return field;
     }
 
-    // ── Action Handler ────────────────────────────────────────────────
     public void actionPerformed(ActionEvent e) {
         String name     = t1.getText().trim();
         String category = t2.getText().trim();
         String priceStr = t3.getText().trim();
         String qtyStr   = t4.getText().trim();
 
-        // Validation
         if (name.isEmpty() || name.equals("Enter product name")) {
             showError("Please enter product name."); return;
         }
@@ -385,8 +359,7 @@ public class AddProduct extends JFrame implements ActionListener {
             ex.printStackTrace();
         }
     }
-
-    // ── Dialogs ───────────────────────────────────────────────────────
+    
     void showError(String msg) {
         FancyDialog.showError(this, msg,
                 "Add Product Failed",
@@ -398,7 +371,6 @@ public class AddProduct extends JFrame implements ActionListener {
                 "Product has been saved to inventory.");
     }
 
-    // ── Rounded Border for fields ─────────────────────────────────────
     static class RoundedFieldBorder extends AbstractBorder {
         private final int   radius;
         private final Color borderColor;
