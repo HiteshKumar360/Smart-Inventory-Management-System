@@ -162,7 +162,6 @@ public class ViewProducts extends JFrame {
             public Component prepareRenderer(TableCellRenderer r, int row, int col) {
                 Component c = super.prepareRenderer(r, row, col);
 
-                // Check quantity for low stock
                 Object qtyObj = model.getValueAt(row, 4);
                 boolean lowStock = false;
                 try {
