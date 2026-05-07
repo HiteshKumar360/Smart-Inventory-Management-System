@@ -12,7 +12,6 @@ public class ViewProducts extends JFrame {
     DefaultTableModel model;
     JLabel countLbl;
 
-    // ── Colors matching Dashboard ─────────────────────────────────────
     static final Color BG_TOP       = new Color(245, 247, 255);
     static final Color BG_BTM       = new Color(230, 235, 252);
     static final Color CARD_FILL    = new Color(255, 255, 255, 245);
@@ -30,7 +29,6 @@ public class ViewProducts extends JFrame {
         setLocationRelativeTo(null);
         setResizable(true);
 
-        // ── Background ────────────────────────────────────────────────
         JPanel bg = new JPanel() {
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g;
@@ -45,9 +43,6 @@ public class ViewProducts extends JFrame {
         bg.setLayout(new BorderLayout(0, 0));
         bg.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        // ══════════════════════════════════════════════════════════════
-        // TOP CARD
-        // ══════════════════════════════════════════════════════════════
         JPanel topCard = new JPanel(null) {
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g;
@@ -81,7 +76,6 @@ public class ViewProducts extends JFrame {
         topCard.setPreferredSize(new Dimension(0, 72));
         topCard.setOpaque(false);
 
-        // Icon
         try {
             ImageIcon ic = new ImageIcon("images/view_1.png");
             if (ic.getIconWidth() > 0) {
@@ -104,7 +98,6 @@ public class ViewProducts extends JFrame {
         subtitle.setBounds(60, 40, 300, 16);
         topCard.add(subtitle);
 
-        // Low stock legend
         JPanel legendDot = new JPanel() {
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g;
@@ -124,7 +117,6 @@ public class ViewProducts extends JFrame {
         legendLbl.setBounds(394, 30, 140, 16);
         topCard.add(legendLbl);
 
-        // Refresh button
         JButton refreshBtn = createAccentButton("Refresh");
         refreshBtn.setBounds(560, 18, 130, 36);
         refreshBtn.addActionListener(e -> {
@@ -135,9 +127,6 @@ public class ViewProducts extends JFrame {
 
         bg.add(topCard, BorderLayout.NORTH);
 
-        // ══════════════════════════════════════════════════════════════
-        // TABLE CARD
-        // ══════════════════════════════════════════════════════════════
         JPanel tableCard = new JPanel(new BorderLayout()) {
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g;
@@ -159,7 +148,6 @@ public class ViewProducts extends JFrame {
         tableCard.setOpaque(false);
         tableCard.setBorder(BorderFactory.createEmptyBorder(14, 14, 8, 14));
 
-        // ── Table Model ───────────────────────────────────────────────
         model = new DefaultTableModel() {
             public boolean isCellEditable(int row, int col) { return false; }
         };
@@ -170,7 +158,6 @@ public class ViewProducts extends JFrame {
         model.addColumn("Quantity");
         model.addColumn("Status");
 
-        // ── Table ─────────────────────────────────────────────────────
         table = new JTable(model) {
             public Component prepareRenderer(TableCellRenderer r, int row, int col) {
                 Component c = super.prepareRenderer(r, row, col);
@@ -197,7 +184,6 @@ public class ViewProducts extends JFrame {
                 if (c instanceof JLabel) {
                     ((JLabel) c).setBorder(
                             BorderFactory.createEmptyBorder(0, 12, 0, 12));
-                    // Center align ID and Quantity columns
                     if (col == 0 || col == 4) {
                         ((JLabel) c).setHorizontalAlignment(SwingConstants.CENTER);
                     } else {
@@ -233,7 +219,6 @@ public class ViewProducts extends JFrame {
         table.setFocusable(false);
         table.getTableHeader().setReorderingAllowed(false);
 
-        // Column widths
         table.getColumnModel().getColumn(0).setPreferredWidth(50);
         table.getColumnModel().getColumn(1).setPreferredWidth(180);
         table.getColumnModel().getColumn(2).setPreferredWidth(120);
@@ -241,7 +226,6 @@ public class ViewProducts extends JFrame {
         table.getColumnModel().getColumn(4).setPreferredWidth(80);
         table.getColumnModel().getColumn(5).setPreferredWidth(80);
 
-        // ── Custom Header ─────────────────────────────────────────────
         JTableHeader header = table.getTableHeader();
         header.setFont(new Font("Segoe UI", Font.BOLD, 12));
         header.setPreferredSize(new Dimension(0, 42));
@@ -262,7 +246,7 @@ public class ViewProducts extends JFrame {
                         g2.fillRect(0, 0, getWidth(), getHeight());
                         g2.setColor(new Color(255, 255, 255, 25));
                         g2.fillRect(0, 0, getWidth(), getHeight()/2);
-                        // Column separator
+
                         g2.setColor(new Color(255, 255, 255, 30));
                         g2.drawLine(getWidth()-1, 4,
                                 getWidth()-1, getHeight()-4);
@@ -276,7 +260,6 @@ public class ViewProducts extends JFrame {
             }
         });
 
-        // ── Scroll Pane ───────────────────────────────────────────────
         JScrollPane scroll = new JScrollPane(table);
         scroll.setBorder(BorderFactory.createEmptyBorder());
         scroll.setOpaque(false);
@@ -304,7 +287,6 @@ public class ViewProducts extends JFrame {
 
         tableCard.add(scroll, BorderLayout.CENTER);
 
-        // ── Status Bar ────────────────────────────────────────────────
         JPanel statusBar = new JPanel(new BorderLayout());
         statusBar.setOpaque(false);
         statusBar.setPreferredSize(new Dimension(0, 32));
@@ -320,7 +302,6 @@ public class ViewProducts extends JFrame {
         lowLbl.setFont(new Font("Segoe UI", Font.PLAIN, 11));
         statusBar.add(lowLbl, BorderLayout.EAST);
 
-        // Update count when data changes
         model.addTableModelListener(e -> {
             int total = model.getRowCount();
             int low = 0;
@@ -348,9 +329,6 @@ public class ViewProducts extends JFrame {
         setVisible(true);
     }
 
-    // ══════════════════════════════════════════════════════════════════
-    // LOAD DATA
-    // ══════════════════════════════════════════════════════════════════
     void loadData() {
         try {
             Connection con = DBConnection.getConnection();
@@ -376,9 +354,6 @@ public class ViewProducts extends JFrame {
         }
     }
 
-    // ══════════════════════════════════════════════════════════════════
-    // BUTTON HELPER
-    // ══════════════════════════════════════════════════════════════════
     JButton createAccentButton(String text) {
         JButton btn = new JButton(text) {
             boolean hovered = false;
