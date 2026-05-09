@@ -10,11 +10,10 @@ public class DeleteProduct extends JFrame implements ActionListener {
     JTextField t1;
     JButton b1, b2;
 
-    // ── Colors matching Dashboard ─────────────────────────────────────
     static final Color BG_TOP       = new Color(245, 247, 255);
     static final Color BG_BTM       = new Color(230, 235, 252);
     static final Color CARD_FILL    = new Color(255, 255, 255, 245);
-    static final Color ACCENT       = new Color(255,  90,  90); // red — matches Delete Product
+    static final Color ACCENT       = new Color(255,  90,  90); 
     static final Color TEXT_PRIMARY = new Color(25,  30,  60);
     static final Color TEXT_MUTED   = new Color(100, 115, 155);
     static final Color FIELD_BG     = new Color(245, 247, 255);
@@ -28,7 +27,6 @@ public class DeleteProduct extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
         setResizable(false);
 
-        // ── Background ────────────────────────────────────────────────
         JPanel bg = new JPanel() {
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g;
@@ -48,24 +46,20 @@ public class DeleteProduct extends JFrame implements ActionListener {
         };
         bg.setLayout(new GridBagLayout());
 
-        // ── Card ──────────────────────────────────────────────────────
         JPanel card = new JPanel(null) {
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g;
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                         RenderingHints.VALUE_ANTIALIAS_ON);
 
-                // Drop shadow
                 for (int i = 8; i > 0; i--) {
                     g2.setColor(new Color(0, 0, 0, 5));
                     g2.fillRoundRect(-i/2, i, getWidth()+i, getHeight()+i/2, 22+i, 22+i);
                 }
 
-                // White card
                 g2.setColor(CARD_FILL);
                 g2.fillRoundRect(0, 0, getWidth()-1, getHeight()-1, 20, 20);
 
-                // Top accent strip
                 GradientPaint strip = new GradientPaint(
                         0, 0,
                         new Color(ACCENT.getRed(), ACCENT.getGreen(), ACCENT.getBlue(), 230),
@@ -76,14 +70,12 @@ public class DeleteProduct extends JFrame implements ActionListener {
                 g2.fillRect(0, 0, getWidth(), 5);
                 g2.setClip(null);
 
-                // Subtle top tint
                 GradientPaint tint = new GradientPaint(
                         0, 0, new Color(255, 90, 90, 10),
                         0, getHeight()/3, new Color(0, 0, 0, 0));
                 g2.setPaint(tint);
                 g2.fillRoundRect(0, 0, getWidth()-1, getHeight()-1, 20, 20);
 
-                // Border
                 g2.setColor(new Color(ACCENT.getRed(), ACCENT.getGreen(), ACCENT.getBlue(), 80));
                 g2.setStroke(new BasicStroke(1f));
                 g2.drawRoundRect(0, 0, getWidth()-1, getHeight()-1, 20, 20);
@@ -92,7 +84,6 @@ public class DeleteProduct extends JFrame implements ActionListener {
         card.setPreferredSize(new Dimension(375, 370));
         card.setOpaque(false);
 
-        // ── Header Icon ───────────────────────────────────────────────
         try {
             ImageIcon deleteIcon = new ImageIcon("images/delete_1.png");
             if (deleteIcon.getIconWidth() > 0) {
@@ -107,7 +98,6 @@ public class DeleteProduct extends JFrame implements ActionListener {
             addFallbackIcon(card);
         }
 
-        // ── Title ─────────────────────────────────────────────────────
         JLabel title = new JLabel("Delete Product", SwingConstants.CENTER);
         title.setForeground(TEXT_PRIMARY);
         title.setFont(new Font("Segoe UI", Font.BOLD, 18));
@@ -120,7 +110,6 @@ public class DeleteProduct extends JFrame implements ActionListener {
         subtitle.setBounds(0, 108, 375, 18);
         card.add(subtitle);
 
-        // Divider
         JPanel divider = new JPanel() {
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g;
@@ -135,7 +124,6 @@ public class DeleteProduct extends JFrame implements ActionListener {
         divider.setOpaque(false);
         card.add(divider);
 
-        // ── Warning Box ───────────────────────────────────────────────
         JPanel warningBox = new JPanel(null) {
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g;
@@ -158,11 +146,9 @@ public class DeleteProduct extends JFrame implements ActionListener {
         warningBox.add(warningText);
         card.add(warningBox);
 
-        // ── Field ─────────────────────────────────────────────────────
         t1 = createField(card, "PRODUCT ID", "Enter product ID to delete", 195);
         t1.addActionListener(this);
 
-        // ── Delete Button ─────────────────────────────────────────────
         b1 = new JButton("Delete Product") {
             boolean hovered = false;
             float glow = 0f;
@@ -212,12 +198,12 @@ public class DeleteProduct extends JFrame implements ActionListener {
 
                 g2.setFont(new Font("Segoe UI", Font.BOLD, 13));
                 FontMetrics fm = g2.getFontMetrics();
-                // Shadow
+
                 g2.setColor(new Color(100, 0, 0, 80));
                 g2.drawString(getText(),
                         (getWidth()  - fm.stringWidth(getText()))/2 + 1,
                         (getHeight() - fm.getHeight())/2 + fm.getAscent() + 1);
-                // Text
+
                 g2.setColor(Color.WHITE);
                 g2.drawString(getText(),
                         (getWidth()  - fm.stringWidth(getText()))/2,
@@ -233,7 +219,6 @@ public class DeleteProduct extends JFrame implements ActionListener {
         b1.addActionListener(this);
         card.add(b1);
 
-        // ── Cancel Button ─────────────────────────────────────────────
         b2 = new JButton("Cancel") {
             boolean hovered = false;
             {
@@ -275,7 +260,6 @@ public class DeleteProduct extends JFrame implements ActionListener {
         setVisible(true);
     }
 
-    // ── Fallback Icon ─────────────────────────────────────────────────
     void addFallbackIcon(JPanel card) {
         JLabel icon = new JLabel("✕", SwingConstants.CENTER) {
             protected void paintComponent(Graphics g) {
@@ -297,7 +281,6 @@ public class DeleteProduct extends JFrame implements ActionListener {
         card.add(icon);
     }
 
-    // ── Field Factory ─────────────────────────────────────────────────
     JTextField createField(JPanel parent, String labelText, String placeholder, int y) {
         JLabel lbl = new JLabel(labelText);
         lbl.setForeground(TEXT_MUTED);
@@ -336,7 +319,6 @@ public class DeleteProduct extends JFrame implements ActionListener {
         return field;
     }
 
-    // ── Action Handler ────────────────────────────────────────────────
     public void actionPerformed(ActionEvent e) {
         String idStr = t1.getText().trim();
 
@@ -385,7 +367,6 @@ public class DeleteProduct extends JFrame implements ActionListener {
         }
     }
 
-    // ── Dialogs ───────────────────────────────────────────────────────
     void showError(String msg) {
         FancyDialog.showError(this, msg,
                 "Delete Failed",
@@ -397,7 +378,6 @@ public class DeleteProduct extends JFrame implements ActionListener {
                 "Product has been permanently removed from inventory.");
     }
 
-    // ── Rounded Border ────────────────────────────────────────────────
     static class RoundedFieldBorder extends AbstractBorder {
         private final int   radius;
         private final Color borderColor;
