@@ -10,7 +10,6 @@ public class UpdateProduct extends JFrame implements ActionListener {
     JTextField t1, t2, t3;
     JButton b1, b2;
 
-    // ── Colors matching Dashboard ─────────────────────────────────────
     static final Color BG_TOP       = new Color(245, 247, 255);
     static final Color BG_BTM       = new Color(230, 235, 252);
     static final Color CARD_FILL    = new Color(255, 255, 255, 245);
@@ -29,7 +28,6 @@ public class UpdateProduct extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
         setResizable(false);
 
-        // ── Background ────────────────────────────────────────────────
         JPanel bg = new JPanel() {
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g;
@@ -49,24 +47,20 @@ public class UpdateProduct extends JFrame implements ActionListener {
         };
         bg.setLayout(new GridBagLayout());
 
-        // ── Card ──────────────────────────────────────────────────────
         JPanel card = new JPanel(null) {
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g;
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                         RenderingHints.VALUE_ANTIALIAS_ON);
 
-                // Drop shadow
                 for (int i = 8; i > 0; i--) {
                     g2.setColor(new Color(0, 0, 0, 5));
                     g2.fillRoundRect(-i/2, i, getWidth()+i, getHeight()+i/2, 22+i, 22+i);
                 }
 
-                // White card
                 g2.setColor(CARD_FILL);
                 g2.fillRoundRect(0, 0, getWidth()-1, getHeight()-1, 20, 20);
 
-                // Top accent strip
                 GradientPaint strip = new GradientPaint(
                         0, 0,
                         new Color(ACCENT.getRed(), ACCENT.getGreen(), ACCENT.getBlue(), 230),
@@ -77,14 +71,12 @@ public class UpdateProduct extends JFrame implements ActionListener {
                 g2.fillRect(0, 0, getWidth(), 5);
                 g2.setClip(null);
 
-                // Subtle top tint
                 GradientPaint tint = new GradientPaint(
                         0, 0, new Color(ACCENT.getRed(), ACCENT.getGreen(), ACCENT.getBlue(), 12),
                         0, getHeight()/3, new Color(0, 0, 0, 0));
                 g2.setPaint(tint);
                 g2.fillRoundRect(0, 0, getWidth()-1, getHeight()-1, 20, 20);
 
-                // Border
                 g2.setColor(new Color(ACCENT.getRed(), ACCENT.getGreen(), ACCENT.getBlue(), 80));
                 g2.setStroke(new BasicStroke(1f));
                 g2.drawRoundRect(0, 0, getWidth()-1, getHeight()-1, 20, 20);
@@ -93,7 +85,6 @@ public class UpdateProduct extends JFrame implements ActionListener {
         card.setPreferredSize(new Dimension(375, 440));
         card.setOpaque(false);
 
-        // ── Header Icon ───────────────────────────────────────────────
         try {
             ImageIcon updateIcon = new ImageIcon("images/update_1.png");
             if (updateIcon.getIconWidth() > 0) {
@@ -108,7 +99,6 @@ public class UpdateProduct extends JFrame implements ActionListener {
             addFallbackIcon(card, "✎");
         }
 
-        // ── Title ─────────────────────────────────────────────────────
         JLabel title = new JLabel("Update Stock", SwingConstants.CENTER);
         title.setForeground(TEXT_PRIMARY);
         title.setFont(new Font("Segoe UI", Font.BOLD, 18));
@@ -121,7 +111,6 @@ public class UpdateProduct extends JFrame implements ActionListener {
         subtitle.setBounds(0, 108, 375, 18);
         card.add(subtitle);
 
-        // Divider
         JPanel divider = new JPanel() {
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g;
@@ -136,17 +125,14 @@ public class UpdateProduct extends JFrame implements ActionListener {
         divider.setOpaque(false);
         card.add(divider);
 
-        // ── Fields ────────────────────────────────────────────────────
         t1 = createField(card, "PRODUCT ID",   "Enter product ID",  142);
         t2 = createField(card, "NEW PRICE (₹)", "Enter new price",  212);
         t3 = createField(card, "NEW QUANTITY", "Enter new quantity", 282);
 
-        // Enter key navigation
         t1.addActionListener(ev -> t2.requestFocus());
         t2.addActionListener(ev -> t3.requestFocus());
         t3.addActionListener(this);
 
-        // ── Update Button ─────────────────────────────────────────────
         b1 = new JButton("Update Product") {
             boolean hovered = false;
             float glow = 0f;
@@ -195,13 +181,13 @@ public class UpdateProduct extends JFrame implements ActionListener {
                 g2.drawRoundRect(0, 0, getWidth()-1, getHeight()-1, 10, 10);
 
                 g2.setFont(new Font("Segoe UI", Font.BOLD, 13));
-                // Shadow
+                
                 g2.setColor(new Color(100, 60, 0, 80));
                 FontMetrics fm = g2.getFontMetrics();
                 g2.drawString(getText(),
                         (getWidth()  - fm.stringWidth(getText()))/2 + 1,
                         (getHeight() - fm.getHeight())/2 + fm.getAscent() + 1);
-                // Text
+
                 g2.setColor(Color.WHITE);
                 g2.drawString(getText(),
                         (getWidth()  - fm.stringWidth(getText()))/2,
@@ -217,7 +203,6 @@ public class UpdateProduct extends JFrame implements ActionListener {
         b1.addActionListener(this);
         card.add(b1);
 
-        // ── Clear Button ──────────────────────────────────────────────
         b2 = new JButton("Clear") {
             boolean hovered = false;
             {
@@ -259,7 +244,6 @@ public class UpdateProduct extends JFrame implements ActionListener {
         setVisible(true);
     }
 
-    // ── Fallback icon ─────────────────────────────────────────────────
     void addFallbackIcon(JPanel card, String symbol) {
         JLabel icon = new JLabel(symbol, SwingConstants.CENTER) {
             protected void paintComponent(Graphics g) {
@@ -282,7 +266,6 @@ public class UpdateProduct extends JFrame implements ActionListener {
         card.add(icon);
     }
 
-    // ── Clear Fields ──────────────────────────────────────────────────
     void clearFields() {
         t1.setText("Enter product ID");   t1.setForeground(TEXT_MUTED);
         t2.setText("Enter new price");    t2.setForeground(TEXT_MUTED);
@@ -290,7 +273,6 @@ public class UpdateProduct extends JFrame implements ActionListener {
         t1.requestFocus();
     }
 
-    // ── Field Factory ─────────────────────────────────────────────────
     JTextField createField(JPanel parent, String labelText, String placeholder, int y) {
         JLabel lbl = new JLabel(labelText);
         lbl.setForeground(TEXT_MUTED);
@@ -329,13 +311,11 @@ public class UpdateProduct extends JFrame implements ActionListener {
         return field;
     }
 
-    // ── Action Handler ────────────────────────────────────────────────
     public void actionPerformed(ActionEvent e) {
         String idStr    = t1.getText().trim();
         String priceStr = t2.getText().trim();
         String qtyStr   = t3.getText().trim();
 
-        // Validation
         if (idStr.isEmpty() || idStr.equals("Enter product ID")) {
             showError("Please enter product ID."); return;
         }
@@ -380,7 +360,6 @@ public class UpdateProduct extends JFrame implements ActionListener {
         }
     }
 
-    // ── Dialogs ───────────────────────────────────────────────────────
     void showError(String msg) {
         FancyDialog.showError(this, msg,
                 "Update Failed",
@@ -392,7 +371,6 @@ public class UpdateProduct extends JFrame implements ActionListener {
                 "Product price and quantity have been updated.");
     }
 
-    // ── Rounded Border ────────────────────────────────────────────────
     static class RoundedFieldBorder extends AbstractBorder {
         private final int   radius;
         private final Color borderColor;
