@@ -13,7 +13,7 @@ public class UpdateProduct extends JFrame implements ActionListener {
     static final Color BG_TOP       = new Color(245, 247, 255);
     static final Color BG_BTM       = new Color(230, 235, 252);
     static final Color CARD_FILL    = new Color(255, 255, 255, 245);
-    static final Color ACCENT       = new Color(255, 190,  60); // yellow — matches Update Stock
+    static final Color ACCENT       = new Color(255, 190,  60); 
     static final Color ACCENT_DARK  = new Color(220, 155,  20);
     static final Color TEXT_PRIMARY = new Color(25,  30,  60);
     static final Color TEXT_MUTED   = new Color(100, 115, 155);
