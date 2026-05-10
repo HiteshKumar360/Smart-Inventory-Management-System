@@ -13,15 +13,13 @@ import java.sql.*;
 
 public class SalesChart extends JFrame {
 
-    // ── Colors matching Dashboard ─────────────────────────────────────
     static final Color BG_TOP       = new Color(245, 247, 255);
     static final Color BG_BTM       = new Color(230, 235, 252);
     static final Color CARD_FILL    = new Color(255, 255, 255, 245);
-    static final Color ACCENT       = new Color(255, 150,  80); // orange — matches Sales Chart card
+    static final Color ACCENT       = new Color(255, 150,  80); 
     static final Color TEXT_PRIMARY = new Color(25,  30,  60);
     static final Color TEXT_MUTED   = new Color(100, 115, 155);
 
-    // Chart bar colors
     static final Color[] BAR_COLORS = {
             new Color(82,  153, 255),
             new Color(82,  200, 140),
@@ -40,7 +38,6 @@ public class SalesChart extends JFrame {
         setLocationRelativeTo(null);
         setResizable(true);
 
-        // ── Background ────────────────────────────────────────────────
         JPanel bg = new JPanel(new BorderLayout(0, 0)) {
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g;
@@ -60,7 +57,6 @@ public class SalesChart extends JFrame {
         };
         bg.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        // ── Top Header Card ───────────────────────────────────────────
         JPanel topCard = new JPanel(null) {
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g;
@@ -93,7 +89,6 @@ public class SalesChart extends JFrame {
         topCard.setPreferredSize(new Dimension(0, 70));
         topCard.setOpaque(false);
 
-        // Header icon
         try {
             ImageIcon chartIcon = new ImageIcon("images/chart_1.png");
             if (chartIcon.getIconWidth() > 0) {
@@ -116,7 +111,6 @@ public class SalesChart extends JFrame {
         subtitle.setBounds(64, 38, 300, 16);
         topCard.add(subtitle);
 
-        // Refresh button
         JButton refreshBtn = new JButton("Refresh") {
             boolean hovered = false;
             {
@@ -143,14 +137,13 @@ public class SalesChart extends JFrame {
                         (getHeight() - fm.getHeight()) / 2 + fm.getAscent());
             }
         };
-        refreshBtn.setBounds(0, 0, 100, 34); // will be repositioned
+        refreshBtn.setBounds(0, 0, 100, 34);
         refreshBtn.setOpaque(false);
         refreshBtn.setContentAreaFilled(false);
         refreshBtn.setBorderPainted(false);
         refreshBtn.setFocusPainted(false);
         refreshBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
-        // Use ComponentListener to position refresh button dynamically
         topCard.addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent e) {
                 refreshBtn.setBounds(topCard.getWidth() - 130, 18, 110, 34);
@@ -159,7 +152,6 @@ public class SalesChart extends JFrame {
         topCard.add(refreshBtn);
         bg.add(topCard, BorderLayout.NORTH);
 
-        // ── Chart Card ────────────────────────────────────────────────
         JPanel chartCard = new JPanel(new BorderLayout()) {
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g;
@@ -180,7 +172,6 @@ public class SalesChart extends JFrame {
         chartCard.setOpaque(false);
         chartCard.setBorder(BorderFactory.createEmptyBorder(16, 16, 16, 16));
 
-        // Build chart
         DefaultCategoryDataset dataset = loadData();
         JFreeChart chart = buildChart(dataset);
         ChartPanel chartPanel = new ChartPanel(chart);
@@ -188,7 +179,6 @@ public class SalesChart extends JFrame {
         chartPanel.setBackground(new Color(0, 0, 0, 0));
         chartCard.add(chartPanel, BorderLayout.CENTER);
 
-        // Refresh action
         refreshBtn.addActionListener(e -> {
             chartCard.removeAll();
             DefaultCategoryDataset newData = loadData();
@@ -210,7 +200,6 @@ public class SalesChart extends JFrame {
         setVisible(true);
     }
 
-    // ── Load Data ─────────────────────────────────────────────────────
     DefaultCategoryDataset loadData() {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         try {
@@ -232,7 +221,6 @@ public class SalesChart extends JFrame {
         return dataset;
     }
 
-    // ── Build Styled Chart ────────────────────────────────────────────
     JFreeChart buildChart(DefaultCategoryDataset dataset) {
         JFreeChart chart = ChartFactory.createBarChart(
                 null,           // title (we show it in card header)
@@ -245,7 +233,6 @@ public class SalesChart extends JFrame {
                 false           // urls
         );
 
-        // Chart background
         chart.setBackgroundPaint(new Color(0, 0, 0, 0));
         chart.setBorderVisible(false);
 
@@ -256,7 +243,6 @@ public class SalesChart extends JFrame {
         plot.setRangeGridlinePaint(new Color(220, 225, 245));
         plot.setRangeGridlineStroke(new BasicStroke(1f));
 
-        // Bar renderer with custom colors
         BarRenderer renderer = new BarRenderer() {
             public Paint getItemPaint(int row, int col) {
                 return BAR_COLORS[col % BAR_COLORS.length];
@@ -266,8 +252,7 @@ public class SalesChart extends JFrame {
         renderer.setShadowVisible(false);
         renderer.setMaximumBarWidth(0.08);
         renderer.setItemMargin(0.15);
-
-        // Bar labels
+s
         renderer.setItemLabelsVisible(true);
         renderer.setItemLabelGenerator(
                 new org.jfree.chart.labels.StandardCategoryItemLabelGenerator(
@@ -281,7 +266,6 @@ public class SalesChart extends JFrame {
 
         plot.setRenderer(renderer);
 
-        // X Axis
         CategoryAxis domainAxis = plot.getDomainAxis();
         domainAxis.setTickLabelFont(new Font("Segoe UI", Font.PLAIN, 11));
         domainAxis.setTickLabelPaint(TEXT_MUTED);
@@ -291,7 +275,6 @@ public class SalesChart extends JFrame {
         domainAxis.setTickMarkPaint(new Color(210, 215, 235));
         domainAxis.setCategoryMargin(0.3);
 
-        // Y Axis
         NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
         rangeAxis.setTickLabelFont(new Font("Segoe UI", Font.PLAIN, 11));
         rangeAxis.setTickLabelPaint(TEXT_MUTED);
