@@ -10,18 +10,16 @@ public class SalesEntry extends JFrame implements ActionListener {
     JTextField t1, t2;
     JButton b1, b2;
 
-    // ── Colors matching Dashboard ─────────────────────────────────────
     static final Color BG_TOP       = new Color(245, 247, 255);
     static final Color BG_BTM       = new Color(230, 235, 252);
     static final Color CARD_FILL    = new Color(255, 255, 255, 245);
-    static final Color ACCENT       = new Color(60,  200, 220); // teal — matches Sales Entry
+    static final Color ACCENT       = new Color(60,  200, 220); 
     static final Color TEXT_PRIMARY = new Color(25,  30,  60);
     static final Color TEXT_MUTED   = new Color(100, 115, 155);
     static final Color FIELD_BG     = new Color(245, 247, 255);
     static final Color FIELD_BORDER = new Color(200, 210, 235);
     static final Color FIELD_FOCUS  = new Color(60,  200, 220, 160);
 
-    // Preview panel labels
     JLabel previewName, previewPrice, previewStock, previewTotal;
 
     SalesEntry() {
@@ -31,7 +29,6 @@ public class SalesEntry extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
         setResizable(false);
 
-        // ── Background ────────────────────────────────────────────────
         JPanel bg = new JPanel() {
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g;
@@ -51,7 +48,6 @@ public class SalesEntry extends JFrame implements ActionListener {
         };
         bg.setLayout(new GridBagLayout());
 
-        // ── Card ──────────────────────────────────────────────────────
         JPanel card = new JPanel(null) {
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g;
@@ -90,7 +86,6 @@ public class SalesEntry extends JFrame implements ActionListener {
         card.setPreferredSize(new Dimension(375, 530));
         card.setOpaque(false);
 
-        // ── Header Icon ───────────────────────────────────────────────
         try {
             ImageIcon salesIcon = new ImageIcon("images/sales_1.png");
             if (salesIcon.getIconWidth() > 0) {
@@ -105,7 +100,6 @@ public class SalesEntry extends JFrame implements ActionListener {
             addFallbackIcon(card);
         }
 
-        // ── Title ─────────────────────────────────────────────────────
         JLabel title = new JLabel("Sales Entry", SwingConstants.CENTER);
         title.setForeground(TEXT_PRIMARY);
         title.setFont(new Font("Segoe UI", Font.BOLD, 18));
@@ -118,7 +112,6 @@ public class SalesEntry extends JFrame implements ActionListener {
         subtitle.setBounds(0, 108, 375, 18);
         card.add(subtitle);
 
-        // Divider
         JPanel divider = new JPanel() {
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g;
@@ -133,11 +126,9 @@ public class SalesEntry extends JFrame implements ActionListener {
         divider.setOpaque(false);
         card.add(divider);
 
-        // ── Input Fields ──────────────────────────────────────────────
         t1 = createField(card, "PRODUCT ID", "Enter product ID", 142);
         t2 = createField(card, "QUANTITY",   "Enter quantity",   212);
 
-        // Live preview on ID field focus lost
         t1.addFocusListener(new FocusAdapter() {
             public void focusLost(FocusEvent e) {
                 loadProductPreview();
@@ -147,7 +138,6 @@ public class SalesEntry extends JFrame implements ActionListener {
         t1.addActionListener(ev -> t2.requestFocus());
         t2.addActionListener(this);
 
-        // ── Product Preview Box ───────────────────────────────────────
         JPanel previewBox = new JPanel(null) {
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g;
@@ -180,14 +170,12 @@ public class SalesEntry extends JFrame implements ActionListener {
         previewBox.add(previewTotal);
         card.add(previewBox);
 
-        // Update total when quantity changes
         t2.addKeyListener(new KeyAdapter() {
             public void keyReleased(KeyEvent e) {
                 updateTotal();
             }
         });
 
-        // ── Sell Button ───────────────────────────────────────────────
         b1 = new JButton("Record Sale") {
             boolean hovered = false;
             float glow = 0f;
@@ -256,7 +244,6 @@ public class SalesEntry extends JFrame implements ActionListener {
         b1.addActionListener(this);
         card.add(b1);
 
-        // ── Clear Button ──────────────────────────────────────────────
         b2 = new JButton("Clear") {
             boolean hovered = false;
             {
@@ -293,7 +280,6 @@ public class SalesEntry extends JFrame implements ActionListener {
         b2.addActionListener(ev -> clearAll());
         card.add(b2);
 
-        // ── Footer note ───────────────────────────────────────────────
         JLabel note = new JLabel("Stock will be automatically updated after sale", SwingConstants.CENTER);
         note.setForeground(new Color(150, 165, 200));
         note.setFont(new Font("Segoe UI", Font.PLAIN, 10));
@@ -305,7 +291,6 @@ public class SalesEntry extends JFrame implements ActionListener {
         setVisible(true);
     }
 
-    // ── Preview label helper ──────────────────────────────────────────
     JLabel makePreviewLabel(String key, int x, int y) {
         JLabel lbl = new JLabel(key + "  —");
         lbl.setForeground(TEXT_MUTED);
@@ -314,7 +299,6 @@ public class SalesEntry extends JFrame implements ActionListener {
         return lbl;
     }
 
-    // ── Load product preview when ID is entered ───────────────────────
     double currentPrice = 0;
     int currentStock = 0;
 
@@ -370,7 +354,6 @@ public class SalesEntry extends JFrame implements ActionListener {
         }
     }
 
-    // ── Fallback Icon ─────────────────────────────────────────────────
     void addFallbackIcon(JPanel card) {
         JLabel icon = new JLabel("₹", SwingConstants.CENTER);
         icon.setFont(new Font("Segoe UI", Font.BOLD, 28));
@@ -379,7 +362,6 @@ public class SalesEntry extends JFrame implements ActionListener {
         card.add(icon);
     }
 
-    // ── Clear All ─────────────────────────────────────────────────────
     void clearAll() {
         t1.setText("Enter product ID"); t1.setForeground(TEXT_MUTED);
         t2.setText("Enter quantity");   t2.setForeground(TEXT_MUTED);
@@ -395,7 +377,6 @@ public class SalesEntry extends JFrame implements ActionListener {
         t1.requestFocus();
     }
 
-    // ── Field Factory ─────────────────────────────────────────────────
     JTextField createField(JPanel parent, String labelText, String placeholder, int y) {
         JLabel lbl = new JLabel(labelText);
         lbl.setForeground(TEXT_MUTED);
@@ -434,7 +415,6 @@ public class SalesEntry extends JFrame implements ActionListener {
         return field;
     }
 
-    // ── Action Handler ────────────────────────────────────────────────
     public void actionPerformed(ActionEvent e) {
         String idStr  = t1.getText().trim();
         String qtyStr = t2.getText().trim();
@@ -455,7 +435,6 @@ public class SalesEntry extends JFrame implements ActionListener {
 
             Connection con = DBConnection.getConnection();
 
-            // Step 1: Get product details
             PreparedStatement ps1 = con.prepareStatement(
                     "SELECT name, price, quantity FROM products WHERE id=?"
             );
@@ -467,7 +446,6 @@ public class SalesEntry extends JFrame implements ActionListener {
                 double price = rs.getDouble("price");
                 int stock    = rs.getInt("quantity");
 
-                // Step 2: Check stock
                 if (qty > stock) {
                     showError("Only " + stock + " units available. You requested " + qty + ".");
                     return;
@@ -475,7 +453,6 @@ public class SalesEntry extends JFrame implements ActionListener {
 
                 double total = price * qty;
 
-                // Step 3: Insert into sales table
                 PreparedStatement ps2 = con.prepareStatement(
                         "INSERT INTO sales(product_name, qty, total) VALUES(?,?,?)"
                 );
@@ -484,7 +461,6 @@ public class SalesEntry extends JFrame implements ActionListener {
                 ps2.setDouble(3, total);
                 ps2.executeUpdate();
 
-                // Step 4: Update stock
                 PreparedStatement ps3 = con.prepareStatement(
                         "UPDATE products SET quantity=? WHERE id=?"
                 );
@@ -493,7 +469,6 @@ public class SalesEntry extends JFrame implements ActionListener {
                 ps3.setInt(2, id);
                 ps3.executeUpdate();
 
-                // Step 5: Show result
                 if (newStock < 5) {
                     FancyDialog.showSuccess(this,
                             name + " — Qty: " + qty + "  |  Total: ₹" + String.format("%.2f", total),
@@ -520,14 +495,12 @@ public class SalesEntry extends JFrame implements ActionListener {
         }
     }
 
-    // ── Dialogs ───────────────────────────────────────────────────────
     void showError(String msg) {
         FancyDialog.showError(this, msg,
                 "Sale Failed",
                 "Please check the details and try again.");
     }
 
-    // ── Rounded Border ────────────────────────────────────────────────
     static class RoundedFieldBorder extends AbstractBorder {
         private final int   radius;
         private final Color borderColor;
